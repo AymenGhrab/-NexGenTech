@@ -1,0 +1,14 @@
+<template>
+    <template if:true={products}>
+        <div class="product-grid">
+            <template for:each={products} for:item="product">
+                <div key={product.Id} class="product-card">
+                    <img src={product.Image_URL} alt={product.Name} />
+                    <h2>{product.Name}</h2>
+                    <p>{product.Description}</p>
+                    <p class="price">${product.Price__c}</p>
+                </div>
+            </template>
+        </div>
+    </template>
+</template>

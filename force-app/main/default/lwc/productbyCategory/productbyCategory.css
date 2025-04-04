@@ -1,0 +1,23 @@
+/* Styles for Product Cards List will be added here */
+.product-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+.product-card {
+    border: 1px solid #ddd;
+    padding: 15px;
+    width: 200px;
+    text-align: center;
+    border-radius: 8px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+}
+img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+.price {
+    font-weight: bold;
+    color: #53b002;
+}
