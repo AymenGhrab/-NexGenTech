@@ -1,14 +1,46 @@
 <template>
-    <template if:true={products}>
-        <div class="product-grid">
-            <template for:each={products} for:item="product">
-                <div key={product.Id} class="product-card">
-                    <img src={product.Image_URL} alt={product.Name} />
-                    <h2>{product.Name}</h2>
-                    <p>{product.Description}</p>
-                    <p class="price">${product.Price__c}</p>
-                </div>
-            </template>
-        </div>
-    </template>
+    <div class="product-category-container">
+        <!-- Loading State -->
+        <template if:true={shouldShowLoading}>
+            <div class="loading-container">
+                <lightning-spinner alternative-text="Loading"></lightning-spinner>
+                <p>Loading products...</p>
+            </div>
+        </template>
+
+        <!-- Error State -->
+        <template if:true={shouldShowError}>
+            <div class="error-container">
+                <p class="error-message">Error loading products. Please try again.</p>
+                <lightning-button 
+                    label="Retry" 
+                    onclick={loadProducts}
+                    variant="neutral">
+                </lightning-button>
+            </div>
+        </template>
+
+        <!-- Products Grid -->
+        <template if:true={shouldShowProducts}>
+            <div class="product-grid">
+                <template for:each={products} for:item="product">
+                    <div key={product.Id} class="product-card">
+                        <img src={product.Image_URL} alt={product.Name} class="product-image"/>
+                        <div class="product-details">
+                            <h3>{product.Name}</h3>
+                            <p class="price">${product.Price__c}</p>
+                            <p class="description">{product.Description}</p>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </template>
+
+        <!-- Empty State -->
+        <template if:true={shouldShowEmptyState}>
+            <div class="empty-state">
+                <p>No products found in this category.</p>
+            </div>
+        </template>
+    </div>
 </template>

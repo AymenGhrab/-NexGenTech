@@ -1,62 +1,90 @@
-import { LightningElement, track, wire } from 'lwc';
+import { LightningElement, wire, track } from 'lwc';
+import { CurrentPageReference } from 'lightning/navigation';
 import getProductsByCategory3 from '@salesforce/apex/ProductController.getProductsByCategory3';
 
 export default class ProductCATEGORY extends LightningElement {
-    @track categoryId;
     @track products = [];
+    @track isLoading = false;
+    @track error;
+    currentPageReference;
 
-   
-    connectedCallback() {
-        this.extractCategoryId();
-        
-
-        window.addEventListener('popstate', this.handleURLChange.bind(this));  // For back/forward navigation
-        window.addEventListener('hashchange', this.handleURLChange.bind(this));  // For hash changes in the URL
+    @wire(CurrentPageReference)
+    handlePageReferenceChange(currentPageReference) {
+        if (currentPageReference) {
+            this.currentPageReference = currentPageReference;
+            this.loadProducts();
+        }
     }
 
-
-    disconnectedCallback() {
-        window.removeEventListener('popstate', this.handleURLChange.bind(this));
-        window.removeEventListener('hashchange', this.handleURLChange.bind(this));
-    }
-
-
-    handleURLChange() {
-        this.extractCategoryId();
-    }
-
-    extractCategoryId() {
+    get categoryId() {
+        if (!this.currentPageReference) return null;
         const path = window.location.pathname;
         const parts = path.split('/');
-        this.categoryId = parts[parts.length - 1]; // Assuming categoryId is the last segment of the URL
-        console.log('Extracted categoryId:', this.categoryId);
+        return parts[parts.length - 1];
     }
 
-
-    @wire(getProductsByCategory3, { categoryId: '$categoryId' })
-    wiredProducts({ error, data }) {
-        if (data) {
-            this.products = data.map(product => {
-                const imageUrl = this.extractImageUrl(product.Image__c);
-                return { ...product, Image_URL: imageUrl };
+    loadProducts() {
+        if (!this.categoryId) return;
+        
+        this.isLoading = true;
+        this.error = undefined;
+        
+        getProductsByCategory3({ categoryId: this.categoryId })
+            .then(data => {
+                this.products = data.map(product => {
+                    return {
+                        ...product,
+                        Image_URL: this.extractImageUrl(product.Image__c)
+                    };
+                });
+            })
+            .catch(error => {
+                console.error('Error loading products:', error);
+                this.error = error;
+            })
+            .finally(() => {
+                this.isLoading = false;
             });
-        } else if (error) {
-            console.error('Error loading products:', error);
-        }
     }
 
     extractImageUrl(imageHtml) {
-        if (!imageHtml) return ''; 
-        const tempDiv = document.createElement('div');
-        tempDiv.innerHTML = imageHtml;
-        const imgTag = tempDiv.querySelector('img');
-        if (imgTag) {
-            const src = imgTag.getAttribute('src');
-            if (src.startsWith('/')) {
-                return window.location.origin + src;
+        if (!imageHtml) return '';
+        
+        try {
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = imageHtml;
+            const imgTag = tempDiv.querySelector('img');
+            
+            if (imgTag) {
+                const src = imgTag.getAttribute('src');
+                return src.startsWith('/') 
+                    ? window.location.origin + src 
+                    : src;
             }
-            return src;
+            return '';
+        } catch (e) {
+            console.error('Error parsing image HTML:', e);
+            return '';
         }
-        return ''; 
+    }
+
+    get hasProducts() {
+        return this.products && this.products.length > 0;
+    }
+
+    get shouldShowLoading() {
+        return this.isLoading && !this.error;
+    }
+
+    get shouldShowError() {
+        return this.error && !this.isLoading;
+    }
+
+    get shouldShowProducts() {
+        return !this.isLoading && !this.error && this.hasProducts;
+    }
+
+    get shouldShowEmptyState() {
+        return !this.isLoading && !this.error && !this.hasProducts;
     }
 }
