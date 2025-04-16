@@ -24,12 +24,17 @@
         <template if:true={shouldShowProducts}>
             <div class="product-grid">
                 <template for:each={products} for:item="product">
-                    <div key={product.Id} class="product-card">
-                        <img src={product.Image_URL} alt={product.Name} class="product-image"/>
-                        <div class="product-details">
-                            <h3>{product.Name}</h3>
-                            <p class="price">${product.Price__c}</p>
-                            <p class="description">{product.Description}</p>
+                    <div key={product.Id} class="product-card-wrapper">
+                        <div class="product-card"
+                             data-id={product.Id}
+                             data-name={product.Name}
+                             onclick={navigateToProductDetail}>
+                            <img src={product.Image_URL} alt={product.Name} class="product-image"/>
+                            <div class="product-details">
+                                <h3>{product.Name}</h3>
+                                <p class="price">${product.Price__c}</p>
+                                <p class="description">{product.Description}</p>
+                            </div>
                         </div>
                     </div>
                 </template>

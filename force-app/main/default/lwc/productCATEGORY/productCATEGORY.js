@@ -1,8 +1,9 @@
 import { LightningElement, wire, track } from 'lwc';
 import { CurrentPageReference } from 'lightning/navigation';
+import { NavigationMixin } from 'lightning/navigation';
 import getProductsByCategory3 from '@salesforce/apex/ProductController.getProductsByCategory3';
 
-export default class ProductCATEGORY extends LightningElement {
+export default class ProductCATEGORY extends NavigationMixin(LightningElement) {
     @track products = [];
     @track isLoading = false;
     @track error;
@@ -66,6 +67,34 @@ export default class ProductCATEGORY extends LightningElement {
             console.error('Error parsing image HTML:', e);
             return '';
         }
+    }
+    navigateToProductDetail(event) {
+        // Get the closest product card element in case children are clicked
+        const cardElement = event.currentTarget.closest('[data-id]');
+        
+        if (!cardElement) {
+            console.error('No product card element found');
+            return;
+        }
+    
+        const productId = cardElement.dataset.id;
+        const productName = cardElement.dataset.name;
+    
+        if (!productId) {
+            console.error('Product ID is undefined');
+            return;
+        }
+    
+        const encodedName = encodeURIComponent(
+            (productName || 'product').replace(/\s+/g, '-').toLowerCase()
+        );
+    
+        this[NavigationMixin.Navigate]({
+            type: 'standard__webPage',
+            attributes: {
+                url: `/product/${encodedName}/${productId}`
+            }
+        });
     }
 
     get hasProducts() {

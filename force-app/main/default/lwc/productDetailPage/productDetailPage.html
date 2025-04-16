@@ -1,0 +1,105 @@
+<template>
+    <lightning-card if:true={product} title={product.Name}>
+        <div class="slds-p-around_medium">
+            <!-- Product Image -->
+            <div class="product-image-container">
+                <img src={product.imageUrl} alt={product.Name} class="product-image"/>
+            </div>
+
+            <!-- Product Details -->
+            <div class="product-details">
+                <h1 class="product-title">{product.Name}</h1>
+                <p class="product-description">{product.Description}</p>
+                
+                <!-- Price Display -->
+                <div class="price-section">
+                    <span class="original-price" if:true={product.Discount__c}>${product.Price__c}</span>
+                    <span class="current-price">${product.Price}</span>
+                    <span class="discount-badge" if:true={product.Discount__c}>
+                        {product.Discount__c}% off
+                    </span>
+                </div>
+                
+                <div class="shipping-info">Free shipping • Tax included</div>
+
+                <!-- Variant Selection -->
+                <div class="variant-section">
+                    <div class="variant-option">
+                        <label>Color:</label>
+                        <div class="color-options">
+                            <!-- Replace with your actual color options -->
+                            <template for:each={colorOptions} for:item="color">
+                                <div key={color.value} class="color-option">
+                                    <input type="radio" id={color.value} name="color" value={color.value} 
+                                           onchange={handleColorChange}/>
+                                    <label for={color.value} style={color.style}></label>
+                                </div>
+                            </template>
+                        </div>
+                    </div>
+
+                    <div class="variant-option">
+                        <label>Size:</label>
+                        <div class="size-options">
+                            <!-- Replace with your actual size options -->
+                            <template for:each={sizeOptions} for:item="size">
+                                <div key={size} class="size-option">
+                                    <input type="radio" id={size} name="size" value={size} 
+                                           onchange={handleSizeChange}/>
+                                    <label for={size}>{size}</label>
+                                </div>
+                            </template>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quantity Selector -->
+                <div class="quantity-selector">
+                    <label>Quantity:</label>
+                    <lightning-input type="number" value={quantity} min="1" 
+                                   onchange={handleQuantityChange}></lightning-input>
+                </div>
+
+                <!-- Tier Pricing Table -->
+                <div class="tier-pricing">
+                    <h3>Tier Discounts</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Quantity</th>
+                                <th>Discount per Unit</th>
+                                <th>Price per Unit</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <template for:each={tieredPricingTable} for:item="tier">
+                                <tr key={tier.min}>
+                                    <td>{tier.min} - {tier.max}</td>
+                                    <td>{tier.discount}%</td>
+                                    <td>${tier.pricePerUnit}</td>
+                                </tr>
+                            </template>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Add to Cart Button -->
+                <div class="add-to-cart">
+                    <lightning-button label="Add to Cart" variant="brand" 
+                                    onclick={addToCart} 
+                                    disabled={isAddToCartDisabled}>
+                    </lightning-button>
+                    <div if:true={showAddedToCart} class="added-to-cart-message">
+                        Item added to cart!
+                    </div>
+                </div>
+            </div>
+        </div>
+    </lightning-card>
+
+    <template if:true={error}>
+        <div class="error-message">
+            Error loading product details. Please try again.
+        </div>
+    </template>
+</template>

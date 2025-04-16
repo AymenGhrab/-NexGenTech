@@ -1,0 +1,150 @@
+.product-image-container {
+    margin-bottom: 1.5rem;
+}
+
+.product-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+.product-details {
+    padding: 0 1rem;
+}
+
+.product-title {
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+    color: #032d60;
+}
+
+.product-description {
+    margin-bottom: 1.5rem;
+    color: #3e3e3c;
+}
+
+.price-section {
+    margin: 1.5rem 0;
+}
+
+.original-price {
+    text-decoration: line-through;
+    color: #706e6b;
+    margin-right: 0.5rem;
+}
+
+.current-price {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #0176d3;
+}
+
+.discount-badge {
+    background-color: #ffd67d;
+    color: #2b2826;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    margin-left: 0.5rem;
+    font-size: 0.875rem;
+}
+
+.shipping-info {
+    color: #2e844a;
+    margin-bottom: 1.5rem;
+}
+
+.variant-section {
+    margin: 1.5rem 0;
+}
+
+.variant-option {
+    margin-bottom: 1rem;
+}
+
+.variant-option label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+.color-options, .size-options {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.color-option label {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 2px solid #dddbda;
+    cursor: pointer;
+}
+
+.color-option input[type="radio"]:checked + label {
+    border-color: #0176d3;
+}
+
+.size-option label {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    border: 1px solid #dddbda;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.size-option input[type="radio"]:checked + label {
+    border-color: #0176d3;
+    background-color: #f3f8fe;
+}
+
+.quantity-selector {
+    margin: 1.5rem 0;
+}
+
+.quantity-selector label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+.tier-pricing {
+    margin: 1.5rem 0;
+    border: 1px solid #dddbda;
+    border-radius: 8px;
+    padding: 1rem;
+}
+
+.tier-pricing h3 {
+    margin-top: 0;
+}
+
+.tier-pricing table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tier-pricing th, .tier-pricing td {
+    padding: 0.5rem;
+    text-align: left;
+    border-bottom: 1px solid #dddbda;
+}
+
+.tier-pricing th {
+    background-color: #f3f3f3;
+}
+
+.add-to-cart {
+    margin-top: 2rem;
+}
+
+.added-to-cart-message {
+    color: #2e844a;
+    margin-top: 0.5rem;
+    font-weight: bold;
+}
+
+.error-message {
+    color: #ea001e;
+    padding: 1rem;
+}

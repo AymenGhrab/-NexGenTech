@@ -28,7 +28,7 @@
 
 .product-image {
     width: 100%;
-    height: 200px;
+    height: 250px;
     object-fit: cover;
 }
 
@@ -46,4 +46,19 @@
 .error-message {
     color: #ea001e;
     margin-bottom: 1rem;
+}
+.product-card-wrapper {
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.product-card-wrapper:hover {
+    transform: scale(1.02);
+}
+.description {
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Change this number to show more or fewer lines */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }

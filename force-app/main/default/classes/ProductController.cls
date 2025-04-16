@@ -50,4 +50,11 @@ global with sharing class ProductController {
     }
     
 
+    @AuraEnabled(cacheable=true)
+    public static Product2 getProductDetails(String productId) {
+        return [SELECT Id, Name, Description, Image__c, Price__c
+                FROM Product2 
+                WHERE Id = :productId LIMIT 1];
+    }
+
 }
