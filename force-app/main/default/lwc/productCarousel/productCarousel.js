@@ -11,9 +11,15 @@ export default class ProductCarousel extends LightningElement {
     },
     {
       id: 2,
-      imageUrl: 'https://i.imgur.com/FEfobUM.png',
-      alt: 'Smartwatch Discount'
-    }
+      imageUrl: 'https://i.imgur.com/DYubohp.png',
+      alt: 'PS5 WireLess Controller'
+    },
+    {
+        id: 3,
+        imageUrl: 'https://i.imgur.com/AWBJWAD.png',
+        alt: 'Luxury Smart Watch'
+      }
+    
   ];
 
   get slides() {
