@@ -1,0 +1,57 @@
+.promo-layout {
+    display: flex;
+    gap: 20px;
+    height: 600px; /* ✅ Key: gives full height context */
+}
+
+/* LEFT column: full height */
+.left-card {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.left-card c-promocard {
+    flex: 1;
+    height: 100%;
+}
+
+/* RIGHT column: split in vertical stack */
+.right-stack {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* top card = half height */
+.top-card {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+/* bottom row = half height */
+.bottom-two {
+    flex: 1;
+    display: flex;
+    gap: 20px;
+}
+
+.bottom-two c-promocard {
+    flex: 1;
+}
+@media (max-width: 768px) {
+    .promo-layout {
+        flex-direction: column;
+        height: auto;
+    }
+
+    .right-stack {
+        flex-direction: column;
+    }
+
+    .bottom-two {
+        flex-direction: column;
+    }
+}
