@@ -1,0 +1,13 @@
+<template>
+    <div class="benefits-container">
+        <template for:each={benefits} for:item="benefit">
+            <div key={benefit.id} class="benefit-item">
+                <div class="icon-wrapper">
+                    <img src={benefit.icon} alt={benefit.title} />
+                </div>
+                <h2>{benefit.title}</h2>
+                <p>{benefit.description}</p>
+            </div>
+        </template>
+    </div>
+</template>

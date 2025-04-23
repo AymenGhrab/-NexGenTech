@@ -1,0 +1,30 @@
+<template>
+    <section class="flash-container">
+        <div class="flash-header">
+            <h2 class="title">🔥 Flash Sales</h2>
+            <div class="countdown">⏰ Ends In: {countdown}</div>
+        </div>
+
+        <div class="product-grid">
+            <template for:each={products} for:item="product">
+                <div key={product.Id} class="product-card">
+                    <div class="discount-badge">-{product.discount}%</div>
+                    <img src={product.Image__c} alt={product.Name} class="product-image" />
+                    <div class="product-info">
+                        <div class="product-name">{product.Name}</div>
+                        <div class="product-rating">
+                            ⭐ {product.rating} ({product.ratingCount})
+                        </div>
+                        <div class="product-price">
+                            <span class="discounted-price">${product.discountedPrice}</span>
+                            <span class="original-price">${product.originalPrice}</span>
+                        </div>
+                        <template if:true={product.actionLabel}>
+                            <button class="action-btn">{product.actionLabel}</button>
+                        </template>
+                    </div>
+                </div>
+            </template>
+        </div>
+    </section>
+</template>
