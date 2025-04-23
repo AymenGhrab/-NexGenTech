@@ -1,0 +1,14 @@
+<template>
+    <div class="category-grid">
+      <template for:each={categories} for:item="category">
+        <div key={category.label} class="category-card">
+          <a href={category.link} class="category-link">
+            <div class="image-wrapper">
+              <img src={category.image} alt={category.label} class="category-image" />
+            </div>
+            <h3 class="category-title">{category.label}</h3>
+          </a>
+        </div>
+      </template>
+    </div>
+  </template>
