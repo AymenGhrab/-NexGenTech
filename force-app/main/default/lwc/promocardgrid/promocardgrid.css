@@ -1,7 +1,7 @@
 .promo-layout {
     display: flex;
     gap: 20px;
-    height: 600px; /* ✅ Key: gives full height context */
+    height: 600px; 
 }
 
 /* LEFT column: full height */
