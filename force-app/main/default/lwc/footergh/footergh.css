@@ -1,0 +1,89 @@
+.footer {
+    background-color: #000000;
+    color: #eee;
+    padding: 2rem 4rem; /* Increased horizontal padding */
+    text-align: center;
+}
+
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    max-width: 1100px; /* Optional: slightly narrower for more side space */
+    margin: 0 auto;
+    gap: 6rem; /* Increased gap between columns */
+    text-align: left;
+}
+
+.footer-section {
+    flex: 1 1 280px; /* Slightly narrower columns */
+}
+
+.logo-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.site-logo {
+    height: 60px;
+    width: auto;
+    filter: brightness(0) invert(1);
+}
+
+.footer-section h3 {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    color: #fff;
+}
+
+.footer-section p,
+.footer-section a {
+    font-size: 0.9rem;
+    color: #ccc;
+    line-height: 1.6;
+    text-decoration: none;
+}
+
+.footer-section a:hover {
+    color: #fff;
+}
+
+.newsletter-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.newsletter-input {
+    flex: 1;
+    padding: 0.6rem 0.8rem;
+    border-radius: 6px;
+    border: none;
+    font-size: 0.9rem;
+    max-width: 250px;
+}
+
+.subscribe-btn {
+    background-color: #DB4444;
+    color: #000;
+    border: none;
+    padding: 0.6rem 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.subscribe-btn:hover {
+    background-color: #f0b429;
+}
+
+.footer-bottom {
+    margin-top: 2rem;
+    font-size: 0.85rem;
+    color: #777;
+    text-align: center;
+}

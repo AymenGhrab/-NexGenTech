@@ -1,0 +1,15 @@
+<template>
+    <div class="login-page">
+        <div class="form-section">
+            <h2>Welcome to Nextron</h2>
+            <p>Sign into your account</p>
+            <lightning-input label="Email" type="email" value={email} onchange={handleEmailChange}></lightning-input>
+            <lightning-input label="Password" type="password" value={password} onchange={handlePasswordChange}></lightning-input>
+            <lightning-button variant="brand" label="Log In" onclick={handleLogin} class="login-button"></lightning-button>
+            <a href="/forgot-password" class="forgot-password">Forgot password?</a>
+        </div>
+        <div class="image-section">
+            <img src="https://i.imgur.com/s0Rtts3.png" alt="Login Image" />
+        </div>
+    </div>
+</template>

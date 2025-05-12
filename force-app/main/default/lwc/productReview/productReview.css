@@ -1,0 +1,57 @@
+.review {
+    padding: 1rem;
+    background: #f9fafb;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    margin-bottom: 1rem;
+}
+
+.review h3 {
+    font-size: 1.1rem;
+    color: #2c3e50;
+    margin-bottom: 4px;
+}
+
+.review .stars {
+    font-size: 1.3rem;
+    color: #f1c40f;
+    margin-bottom: 6px;
+}
+
+.star-filled {
+    color: #f1c40f;
+    cursor: pointer;
+}
+.star-empty {
+    color: #ccc;
+    cursor: pointer;
+}
+
+.new-review {
+    margin-top: 32px;
+    background: #eef2f7;
+    border-radius: 10px;
+    padding: 20px;
+    border: 1px solid #d0d7de;
+}
+
+.star-picker {
+    margin: 8px 0;
+    font-size: 1.5rem;
+}
+
+.submit-btn {
+    margin-top: 12px;
+    width: 100%;
+}
+
+.error {
+    color: red;
+    font-weight: bold;
+}
+
+.pagination {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}

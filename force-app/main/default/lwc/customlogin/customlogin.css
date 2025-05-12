@@ -1,0 +1,39 @@
+.login-page {
+    display: flex;
+    min-height: 100vh;
+}
+
+.form-section {
+    flex: 1;
+    background: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+}
+
+.image-section {
+    flex: 1;
+    background: linear-gradient(to right, #4facfe, #00f2fe);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.image-section img {
+    max-width: 80%;
+}
+
+.login-button {
+    margin-top: 1rem;
+    width: 100%;
+}
+
+.forgot-password {
+    margin-top: 0.5rem;
+    display: block;
+    font-size: 0.9rem;
+    text-decoration: underline;
+    color: #555;
+}

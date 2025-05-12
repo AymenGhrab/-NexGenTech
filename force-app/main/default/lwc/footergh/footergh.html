@@ -1,0 +1,31 @@
+<template>
+    <footer class="footer">
+        <div class="footer-container">
+            <!-- Logo Section -->
+            <div class="footer-section logo-section">
+                <img src="https://i.imgur.com/xZcZNnZ.png" alt="Nexera Logo" class="site-logo" />
+            </div>
+
+            <!-- Newsletter Section -->
+            <div class="footer-section">
+                <h3>📩 Newsletter</h3>
+                <p>Sign up to get the latest updates and offers.</p>
+                <div class="newsletter-form">
+                    <input type="email" placeholder="Your email address" class="newsletter-input" onchange={handleInputChange} />
+                    <button class="subscribe-btn" onclick={subscribe}>Subscribe</button>
+                </div>
+                <p if:true={message} class="newsletter-message">{message}</p>
+            </div>
+
+            <!-- Contact Section -->
+            <div class="footer-section">
+                <h3>📞 Contact Us</h3>
+                <p>Email: <a href="mailto:support@nextron.com">support@nextron.com</a></p>
+                <p>Phone: +216 99 999 999</p>
+                <p>Address: 123 Rue des Technologies, Tunis</p>
+            </div>
+        </div>
+
+        <p class="footer-bottom">&copy; 2025 Nextron | All rights reserved.</p>
+    </footer>
+</template>

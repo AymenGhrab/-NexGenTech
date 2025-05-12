@@ -1,0 +1,49 @@
+<template>
+    <lightning-card title="Product Reviews">
+        <!-- Error -->
+        <template if:true={error}>
+            <p class="error">{errorMessage}</p>
+        </template>
+
+        <!-- Review list with pagination -->
+        <template if:true={paginatedReviews}>
+            <template for:each={paginatedReviews} for:item="review">
+                <div key={review.Id} class="review">
+                    <h3>{review.Name}</h3>
+                    <div class="stars">
+                        <template for:each={review.stars} for:item="star">
+                            <span key={star.id} class={star.cssClass}>★</span>
+                        </template>
+                    </div>
+                    <small>Reviewed on: {review.CreatedDate}</small>
+                    <hr/>
+                </div>
+            </template>
+
+            <div class="pagination">
+                <lightning-button label="Prev" onclick={prevPage} disabled={isFirstPage}></lightning-button>
+                <lightning-button label="Next" onclick={nextPage} disabled={isLastPage}></lightning-button>
+            </div>
+        </template>
+
+        <!-- Add Review -->
+        <div class="new-review">
+            <h2>Add Your Review</h2>
+            <lightning-input label="Title" value={title} onchange={handleTitleChange}></lightning-input>
+            <div class="star-picker">
+                <template for:each={starArray} for:item="star">
+                    <span
+                        key={star.key}
+                       class={star.cssClass}
+                        data-index={star.index}
+                        onclick={handleStarClick}>
+                        ★
+                    </span>
+                </template>
+                
+            </div>
+  
+            <lightning-button label="Submit Review" onclick={submitReview} class="submit-btn"></lightning-button>
+        </div>
+    </lightning-card>
+</template>

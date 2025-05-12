@@ -57,4 +57,29 @@ global with sharing class ProductController {
                 WHERE Id = :productId LIMIT 1];
     }
 
+    @AuraEnabled(cacheable=true)
+    public static List<ProductRating__c> getReviewsForProduct(Id productId) {
+        return [
+            SELECT Id, Name, ProductRating__c, Product__c, CreatedDate
+            FROM ProductRating__c
+            WHERE Product__c = :productId
+            ORDER BY CreatedDate DESC
+        ];
+    }
+
+    @AuraEnabled
+    public static ProductRating__c submitReview(Id productId, String title, Decimal rating) {
+        ProductRating__c review = new ProductRating__c();
+        review.Name = title;
+        review.ProductRating__c = rating;
+        review.Product__c = productId;
+        
+        try {
+            insert review;
+        } catch (DmlException e) {
+            throw new AuraHandledException('Failed to submit review: ' + e.getMessage());
+        }
+
+        return review;
+    }
 }
