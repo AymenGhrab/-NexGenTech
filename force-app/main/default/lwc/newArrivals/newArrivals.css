@@ -1,0 +1,33 @@
+.category-header {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem 0;
+}
+
+.label-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.label-dot {
+    width: 12px;
+    height: 20px;
+    background-color: #e74c3c; /* red */
+    border-radius: 4px;
+    margin-right: 0.5rem;
+}
+
+.label-text {
+    color: #e74c3c;
+    font-weight: bold;
+    font-size: 0.9rem;
+    font-family: Popppins, sans-serif;
+}
+
+.section-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin: 0;
+    font-family: Popppins, sans-serif;
+}

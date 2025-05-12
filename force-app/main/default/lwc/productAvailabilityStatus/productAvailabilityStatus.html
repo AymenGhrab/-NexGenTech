@@ -1,0 +1,30 @@
+<template>
+    <!-- Loading State -->
+    <template if:true={isLoading}>
+        <p class="slds-text-body_regular">⏳ Checking availability...</p>
+    </template>
+
+    <!-- Error State -->
+    <template if:true={error}>
+        <div class="slds-text-color_error">
+            ❗ {error}
+            <template if:true={canRetry}>
+                <button class="slds-button slds-button_neutral slds-m-left_small" onclick={handleRetry}>
+                    Try Again
+                </button>
+            </template>
+        </div>
+    </template>
+
+    <!-- Stock Availability -->
+    <template if:false={isLoading}>
+        <template if:false={error}>
+            <template if:true={isOutOfStock}>
+                <p class="slds-text-color_error">❌ This product is currently out of stock.</p>
+            </template>
+            <template if:false={isOutOfStock}>
+                <p class="slds-text-color_success">✅ This product is currently available!</p>
+            </template>
+        </template>
+    </template>
+</template>
