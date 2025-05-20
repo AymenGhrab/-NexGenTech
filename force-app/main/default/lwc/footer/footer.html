@@ -9,11 +9,33 @@
             <!-- Newsletter Section -->
             <div class="footer-section">
                 <h3>📩 Newsletter</h3>
-                <p>Sign up to get the latest updates and offers.</p>
-                <div class="newsletter-form">
-                    <input type="email" placeholder="Your email address" class="newsletter-input" />
-                    <button class="subscribe-btn">Subscribe</button>
-                </div>
+                <p>Subscribe to our newsletter for updates.</p>
+
+                <template if:false={showSuccess}>
+                    <template if:false={isAuthenticated}>
+                        <lightning-input
+                            type="email"
+                            label="Email"
+                            value={email}
+                            onchange={handleEmailChange}
+                            placeholder="you@example.com"
+                            required>
+                        </lightning-input>
+                    </template>
+
+                    <div class="slds-m-top_small">
+                        <button
+                            class="subscribe-btn"
+                            onclick={handleSubscribe}
+                            disabled={isSubmitting}>
+                            Subscribe
+                        </button>
+                    </div>
+                </template>
+
+                <template if:true={showSuccess}>
+                    <p class="slds-text-color_success">✅ Successfully subscribed!</p>
+                </template>
             </div>
 
             <!-- Contact Section -->
@@ -28,4 +50,3 @@
         <p class="footer-bottom">&copy; 2025 Nexera | All rights reserved.</p>
     </footer>
 </template>
-    

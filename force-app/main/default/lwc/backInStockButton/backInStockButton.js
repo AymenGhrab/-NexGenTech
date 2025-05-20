@@ -3,18 +3,19 @@ import isProductOutOfStock from '@salesforce/apex/BackInStockController.isProduc
 import createStockRequest from '@salesforce/apex/BackInStockController.createStockRequest';
 import isUserAuthenticated from '@salesforce/apex/BackInStockController.isUserAuthenticated';
 import getAuthenticatedUserDetails from '@salesforce/apex/BackInStockController.getAuthenticatedUserDetails';
+import hasActiveAlert from '@salesforce/apex/BackInStockController.hasActiveAlert';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
-
+ 
 export default class BackInStockButton extends LightningElement {
     @api productId;
-    @api productSku;
     @track email = '';
+    @api productSku;
     @track accountId = '';
     @track showButton = false;
     @track isSubmitting = false;
     @track showSuccess = false;
     @track isAuthenticated = false;
-
+ 
     connectedCallback() {
         this.extractProductIdFromUrl();
         if (this.productId) {
@@ -22,14 +23,14 @@ export default class BackInStockButton extends LightningElement {
         }
         this.checkAuthStatus();
     }
-
+ 
     extractProductIdFromUrl() {
         const urlPath = window.location.pathname;
         const pathParts = urlPath.split('/');
         this.productId = pathParts[pathParts.length - 1];
         console.log('Extracted productId:', this.productId);
     }
-
+ 
     checkStock() {
         isProductOutOfStock({ productId: this.productId })
             .then(result => {
@@ -40,7 +41,7 @@ export default class BackInStockButton extends LightningElement {
                 this.showToast('Error', 'Could not check stock', 'error');
             });
     }
-
+ 
     checkAuthStatus() {
         isUserAuthenticated()
             .then(result => {
@@ -53,26 +54,43 @@ export default class BackInStockButton extends LightningElement {
                 console.error('Auth check failed:', error);
             });
     }
-
+ 
     loadUserDetails() {
         getAuthenticatedUserDetails()
             .then(data => {
                 this.email = data.email;
                 this.accountId = data.accountId;
+                this.checkExistingAlert();
             })
             .catch(error => {
                 console.error('Failed to load user details:', error);
             });
     }
-
+ 
+    checkExistingAlert() {
+        if (!this.email || !this.productId) return;
+ 
+        hasActiveAlert({ productId: this.productId, email: this.email })
+            .then(result => {
+                if (result) {
+                    this.showButton = false;
+                    this.showSuccess = true;
+                }
+            })
+            .catch(error => {
+                console.error('Failed to check existing alert:', error);
+            });
+    }
+ 
     handleEmailChange(event) {
         this.email = event.target.value;
+        this.checkExistingAlert();
     }
-
+ 
     handleAuthenticatedSubmit() {
         this.handleSubmit(this.email, this.accountId);
     }
-
+ 
     handleGuestSubmit() {
         if (!this.validateEmail()) {
             this.showToast('Error', 'Please enter a valid email address', 'error');
@@ -80,7 +98,7 @@ export default class BackInStockButton extends LightningElement {
         }
         this.handleSubmit(this.email, null);
     }
-
+ 
     handleSubmit(emailToSubmit, accountIdToSubmit) {
         this.isSubmitting = true;
         createStockRequest({ productId: this.productId, email: emailToSubmit, accountId: accountIdToSubmit })
@@ -96,12 +114,12 @@ export default class BackInStockButton extends LightningElement {
                 this.isSubmitting = false;
             });
     }
-
+ 
     validateEmail() {
         const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return regex.test(this.email);
     }
-
+ 
     showToast(title, message, variant) {
         this.dispatchEvent(new ShowToastEvent({ title, message, variant }));
     }

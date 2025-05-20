@@ -1,31 +1,48 @@
-import { LightningElement, api } from 'lwc';
+import { LightningElement, api, track } from 'lwc';
 import isProductOutOfStock from '@salesforce/apex/BackInStockController.isProductOutOfStock';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
 export default class ProductAvailability extends LightningElement {
     @api productId;
 
-    isOutOfStock;
-    error;
-    isLoading = false;
+    @track isLoading = false;
+    @track isOutOfStock = false;
+    @track error = null;
+    @track hasChecked = false;
 
-    renderedCallback() {
-        if (this.productId && this.isOutOfStock === undefined && !this.isLoading) {
-            this.checkAvailability();
+    connectedCallback() {
+        this.extractProductIdFromUrl();
+        if (this.productId) {
+            this.checkStock();
+        } else {
+            console.error('No productId found.');
+            this.error = 'Unable to determine the product.';
         }
     }
 
-    checkAvailability() {
+    extractProductIdFromUrl() {
+        if (!this.productId) {
+            const urlPath = window.location.pathname;
+            const parts = urlPath.split('/');
+            this.productId = parts[parts.length - 1];
+            console.log('🔎 Extracted productId:', this.productId);
+        }
+    }
+
+    checkStock() {
         this.isLoading = true;
         this.error = null;
 
         isProductOutOfStock({ productId: this.productId })
             .then(result => {
+                console.log('Stock check result (isOutOfStock):', result);
                 this.isOutOfStock = result;
-                this.error = null;
+                this.hasChecked = true;
             })
             .catch(error => {
-                this.error = error?.body?.message || error?.message || 'Unknown error';
-                console.error('Error fetching product availability:', error);
+                console.error('Error checking stock:', error);
+                this.error = error?.body?.message || error?.message || 'Error checking stock.';
+                this.showToast('Error', this.error, 'error');
             })
             .finally(() => {
                 this.isLoading = false;
@@ -37,7 +54,11 @@ export default class ProductAvailability extends LightningElement {
     }
 
     handleRetry() {
-        this.error = null;
-        this.checkAvailability();
+        console.log('Retry clicked');
+        this.checkStock();
+    }
+
+    showToast(title, message, variant) {
+        this.dispatchEvent(new ShowToastEvent({ title, message, variant }));
     }
 }

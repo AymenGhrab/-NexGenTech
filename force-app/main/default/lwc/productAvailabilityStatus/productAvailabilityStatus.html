@@ -1,13 +1,13 @@
 <template>
-    <!-- Loading State -->
+    <!-- Loading -->
     <template if:true={isLoading}>
-        <p class="slds-text-body_regular">⏳ Checking availability...</p>
+        <lightning-spinner alternative-text="Checking availability..." size="small"></lightning-spinner>
     </template>
 
-    <!-- Error State -->
+    <!-- Error -->
     <template if:true={error}>
         <div class="slds-text-color_error">
-            ❗ {error}
+            {error}
             <template if:true={canRetry}>
                 <button class="slds-button slds-button_neutral slds-m-left_small" onclick={handleRetry}>
                     Try Again
@@ -16,7 +16,7 @@
         </div>
     </template>
 
-    <!-- Stock Availability -->
+    <!-- Availability Display -->
     <template if:false={isLoading}>
         <template if:false={error}>
             <template if:true={isOutOfStock}>
