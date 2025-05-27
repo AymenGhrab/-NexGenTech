@@ -13,14 +13,13 @@
 
                 <template if:false={showSuccess}>
                     <template if:false={isAuthenticated}>
-                        <lightning-input
+                        <input
                             type="email"
-                            label="Email"
+                            class="newsletter-input"
+                            placeholder="Enter your email"
                             value={email}
                             onchange={handleEmailChange}
-                            placeholder="you@example.com"
-                            required>
-                        </lightning-input>
+                            required/>
                     </template>
 
                     <div class="slds-m-top_small">

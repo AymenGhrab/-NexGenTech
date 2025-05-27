@@ -69,20 +69,21 @@ public with sharing class BackInStockController {
         return userDetails;
     }
  
-    // ✅ NEW: Check if an active (non-expired) request exists
     @AuraEnabled(cacheable=true)
-    public static Boolean hasActiveAlert(Id productId, String email) {
-        if (String.isBlank(email)) return false;
- 
-        List<Back_in_stock_alert__c> alerts = [
-            SELECT Id, Status__c
-            FROM Back_in_stock_alert__c
-            WHERE Product__c = :productId
-            AND Customer_Email__c = :email
-            AND Status__c != 'Expired'
-            LIMIT 1
-        ];
- 
-        return !alerts.isEmpty();
-    }
+public static Boolean hasActiveAlert(Id productId, String email) {
+    if (String.isBlank(email)) return false;
+
+    List<Back_in_stock_alert__c> alerts = [
+        SELECT Id
+        FROM Back_in_stock_alert__c
+        WHERE Product__c = :productId
+        AND Customer_Email__c = :email
+        AND Expired__c = false
+        AND Status__c = 'Requested'
+        LIMIT 1
+    ];
+
+    return !alerts.isEmpty();
+}
+
 }
