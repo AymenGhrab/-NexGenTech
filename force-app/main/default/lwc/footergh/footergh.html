@@ -9,18 +9,39 @@
             <!-- Newsletter Section -->
             <div class="footer-section">
                 <h3>📩 Newsletter</h3>
-                <p>Sign up to get the latest updates and offers.</p>
-                <div class="newsletter-form">
-                    <input type="email" placeholder="Your email address" class="newsletter-input" onchange={handleInputChange} />
-                    <button class="subscribe-btn" onclick={subscribe}>Subscribe</button>
-                </div>
-                <p if:true={message} class="newsletter-message">{message}</p>
+                <p>Subscribe to our newsletter for updates.</p>
+
+                <template if:false={showSuccess}>
+                    <template if:false={isAuthenticated}>
+                        <lightning-input
+                            type="email"
+                            label="Email"
+                            value={email}
+                            onchange={handleEmailChange}
+                            placeholder="you@example.com"
+                            required>
+                        </lightning-input>
+                    </template>
+
+                    <div class="slds-m-top_small">
+                        <button
+                            class="subscribe-btn"
+                            onclick={handleSubscribe}
+                            disabled={isSubmitting}>
+                            Subscribe
+                        </button>
+                    </div>
+                </template>
+
+                <template if:true={showSuccess}>
+                    <p class="slds-text-color_success">✅ Successfully subscribed!</p>
+                </template>
             </div>
 
             <!-- Contact Section -->
             <div class="footer-section">
                 <h3>📞 Contact Us</h3>
-                <p>Email: <a href="mailto:support@nextron.com">support@nextron.com</a></p>
+                <p>Email: <a href="mailto:support@nexera.com">support@nextron.com</a></p>
                 <p>Phone: +216 99 999 999</p>
                 <p>Address: 123 Rue des Technologies, Tunis</p>
             </div>
